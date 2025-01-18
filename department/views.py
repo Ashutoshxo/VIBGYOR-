@@ -1,14 +1,10 @@
 from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import DepartmentForm, RoleForm, UserForm, PerformanceForm, TaskForm, LeaveForm
-from .models import Department
-from .models import Role
-
-from django.shortcuts import render, redirect, get_object_or_404
+from .models import Role, Department
 from .models import Performance, User, Leave,  Task
 from django.shortcuts import render, redirect
 from .forms import SignUpForm
-from django.shortcuts import render, redirect
 from .forms import DepartmentForm
 # Create your views here.
 
@@ -24,7 +20,7 @@ def signup(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login')  # Redirect to login page after successful signup
+            return redirect('login') 
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
