@@ -1,0 +1,7 @@
+<!-- leave_form.html -->
+<h1>{% if form.instance.id %}Edit Leave Request{% else %}Create New Leave Request{% endif %}</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>

@@ -1,0 +1,23 @@
+<h1>Performance Reviews for {{ user.username }}</h1>
+<a href="{% url 'performance_create' user.id %}">Create New Review</a>
+<table>
+    <thead>
+        <tr>
+            <th>Review Date</th>
+            <th>Feedback</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for performance in performances %}
+            <tr>
+                <td>{{ performance.review_date }}</td>
+                <td>{{ performance.feedback }}</td>
+                <td>
+                    <a href="{% url 'performance_create' user.id %}">Edit</a>
+                    <a href="{% url 'performance_delete' performance.id %}">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

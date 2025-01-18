@@ -1,0 +1,8 @@
+
+<h2>{% if form.instance.dept_id %}Update{% else %}Create{% endif %} Department</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">{% if form.instance.dept_id %}Update{% else %}Create{% endif %}</button>
+</form>
