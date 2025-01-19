@@ -1,6 +1,6 @@
 <h1>Leave Requests for {{ user.username }}</h1>
-<a href="{% url 'leave_create' user.id %}">Create New Leave Request</a>
-<table>
+<a href="{% url 'leave_create' user.id %}" class="button">Create New Leave Request</a>
+<table class="leave-table">
     <thead>
         <tr>
             <th>Leave Type</th>
@@ -18,10 +18,110 @@
                 <td>{{ leave.end_date }}</td>
                 <td>{{ leave.status }}</td>
                 <td>
-                    <a href="{% url 'leave_create' user.id %}">Edit</a>
-                    <a href="{% url 'leave_delete' leave.id %}">Delete</a>
+                    {% if leave.is_deleted %}
+                        <a href="{% url 'leave_restore' leave.id %}" onclick="return confirm('Are you sure you want to restore this leave request?');" class="action-btn restore-btn">Restore</a>
+                    {% else %}
+                        <a href="{% url 'leave_create' user.id %}" class="action-btn edit-btn">Edit</a>
+                        <a href="{% url 'leave_delete' leave.id %}" onclick="return confirm('Are you sure you want to delete this leave request?');" class="action-btn delete-btn">Delete</a>
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
     </tbody>
 </table>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f7fa;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 28px;
+        color: #4CAF50;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    a.button {
+        display: inline-block;
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 4px;
+        text-decoration: none;
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    a.button:hover {
+        background-color: #45a049;
+    }
+
+    table.leave-table {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+        border-collapse: collapse;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    table.leave-table th,
+    table.leave-table td {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid #ccc;
+    }
+
+    table.leave-table th {
+        background-color: #f4f7fa;
+        color: #333;
+    }
+
+    table.leave-table td a {
+        text-decoration: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-size: 14px;
+        margin-right: 8px;
+        transition: background-color 0.3s;
+    }
+
+    .action-btn {
+        display: inline-block;
+        font-size: 14px;
+        padding: 6px 12px;
+        border-radius: 4px;
+    }
+
+    .restore-btn {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .restore-btn:hover {
+        background-color: #45a049;
+    }
+
+    .edit-btn {
+        background-color: #2196F3;
+        color: white;
+    }
+
+    .edit-btn:hover {
+        background-color: #0b7dda;
+    }
+
+    .delete-btn {
+        background-color: #f44336;
+        color: white;
+    }
+
+    .delete-btn:hover {
+        background-color: #e53935;
+    }
+</style>

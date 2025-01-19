@@ -26,55 +26,45 @@ def signup(request):
     return render(request, 'signup.html', {'form': form})
 
 
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Department
 
+def department_list(request):
+    departments = Department.objects.all()
+    return render(request, 'department_list.html', {'departments': departments})
 
 def department_create(request):
     if request.method == 'POST':
         form = DepartmentForm(request.POST)
         if form.is_valid():
-            form.save() 
-            return redirect('department_list')  
+            form.save()
+            return redirect('department_list')
     else:
         form = DepartmentForm()
     return render(request, 'department_form.html', {'form': form})
 
-
-from django.shortcuts import render
-from .models import Department
-
-def department_list(request):
-    departments = Department.objects.all()  
-    return render(request, 'department_list.html', {'departments': departments})
-
-
-
-
-
 def department_update(request, dept_id):
-    department = get_object_or_404(Department, dept_id=dept_id) 
+    department = get_object_or_404(Department, dept_id=dept_id)
     if request.method == 'POST':
-        form = DepartmentForm(request.POST, instance=department)  
+        form = DepartmentForm(request.POST, instance=department)
         if form.is_valid():
-            form.save() 
+            form.save()
             return redirect('department_list')
     else:
         form = DepartmentForm(instance=department)
     return render(request, 'department_form.html', {'form': form})
 
-
-
-from django.shortcuts import get_object_or_404, redirect
-from .models import Department
-
 def department_delete(request, dept_id):
     department = get_object_or_404(Department, dept_id=dept_id)
-    department.delete()  
-    return redirect('department_list')   
+    department.is_deleted = True  
+    department.save()
+    return redirect('department_list')
 
-
-
-
-
+def department_restore(request, dept_id):
+    department = get_object_or_404(Department, dept_id=dept_id)
+    department.is_deleted = False  
+    department.save()
+    return redirect('department_list')
 
 
 def role_list(request):
@@ -89,7 +79,7 @@ def role_create(request):
             return redirect('role_list')
     else:
         form = RoleForm()
-    return render(request, 'role_form.html', {'form': form})#
+    return render(request, 'role_form.html', {'form': form})
 
 def role_update(request, role_id):
     role = get_object_or_404(Role, id=role_id)
@@ -102,14 +92,17 @@ def role_update(request, role_id):
         form = RoleForm(instance=role)
     return render(request, 'role_form.html', {'form': form})
 
-
 def role_delete(request, role_id):
     role = get_object_or_404(Role, id=role_id)
-    role.delete()
+    role.is_deleted = True  # Soft delete
+    role.save()
     return redirect('role_list')
 
-
-
+def role_restore(request, role_id):
+    role = get_object_or_404(Role, id=role_id)
+    role.is_deleted = False  # Restore
+    role.save()
+    return redirect('role_list')
 
 
 
@@ -128,7 +121,6 @@ def user_create(request):
         form = UserForm()
     return render(request, 'user_form.html', {'form': form})
 
-
 def user_update(request, user_id):
     user = get_object_or_404(User, id=user_id)
     if request.method == 'POST':
@@ -140,16 +132,22 @@ def user_update(request, user_id):
         form = UserForm(instance=user)
     return render(request, 'user_form.html', {'form': form})
 
-
 def user_delete(request, user_id):
     user = get_object_or_404(User, id=user_id)
-    user.delete()
+    user.is_deleted = True  # Soft delete
+    user.save()
     return redirect('user_list')
 
+def user_restore(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    user.is_deleted = False  # Restore
+    user.save()
+    return redirect('user_list')
 
-
-
-
+def performance_list(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    performances = Performance.objects.filter(user=user, is_deleted=False)
+    return render(request, 'performance_list.html', {'performances': performances, 'user': user})
 
 def performance_create(request, user_id):
     user = get_object_or_404(User, id=user_id)
@@ -164,18 +162,22 @@ def performance_create(request, user_id):
         form = PerformanceForm()
     return render(request, 'pro.html', {'form': form, 'user': user})
 
+def performance_delete(request, performance_id):
+    performance = get_object_or_404(Performance, id=performance_id)
+    performance.is_deleted = True  # Soft delete
+    performance.save()
+    return redirect('performance_list', user_id=performance.user.id)
 
+def performance_restore(request, performance_id):
+    performance = get_object_or_404(Performance, id=performance_id)
+    performance.is_deleted = False  # Restore
+    performance.save()
+    return redirect('performance_list', user_id=performance.user.id)
 
-def performance_list(request, user_id):
-
+def task_list(request, user_id):
     user = get_object_or_404(User, id=user_id)
-    performances = Performance.objects.filter(user=user)
-    return render(request, 'performance_list.html', {'performances': performances, 'user': user})
-
-
-
-
-
+    tasks = Task.objects.filter(user=user, is_deleted=False)
+    return render(request, 'task_list.html', {'tasks': tasks, 'user': user})
 
 def task_create(request, user_id):
     user = get_object_or_404(User, id=user_id)
@@ -190,15 +192,36 @@ def task_create(request, user_id):
         form = TaskForm()
     return render(request, 'task_form.html', {'form': form, 'user': user})
 
-def task_list(request, user_id):
+def task_delete(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    task.is_deleted = True  # Soft delete
+    task.save()
+    return redirect('task_list', user_id=task.user.id)
+
+def task_restore(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    task.is_deleted = False  # Restore
+    task.save()
+    return redirect('task_list', user_id=task.user.id)
+
+def task_update(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    if request.method == 'POST':
+        form = TaskForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+            return redirect('task_list', user_id=task.user.id)  # Redirect to task list after update
+    else:
+        form = TaskForm(instance=task)
+    
+    return render(request, 'task_form.html', {'form': form, 'task': task, 'user': task.user})
+
+
+
+def leave_list(request, user_id):
     user = get_object_or_404(User, id=user_id)
-    tasks = Task.objects.filter(user=user)
-    return render(request, 'task_list.html', {'tasks': tasks, 'user': user})
-
-
-
-
-
+    leaves = Leave.objects.filter(user=user, is_deleted=False)
+    return render(request, 'leave_list.html', {'leaves': leaves, 'user': user})
 
 def leave_create(request, user_id):
     user = get_object_or_404(User, id=user_id)
@@ -213,8 +236,14 @@ def leave_create(request, user_id):
         form = LeaveForm()
     return render(request, 'leave_form.html', {'form': form, 'user': user})
 
+def leave_delete(request, leave_id):
+    leave = get_object_or_404(Leave, id=leave_id)
+    leave.is_deleted = True  # Soft delete
+    leave.save()
+    return redirect('leave_list', user_id=leave.user.id)
 
-def leave_list(request, user_id):
-    user = get_object_or_404(User, id=user_id)
-    leaves = Leave.objects.filter(user=user)
-    return render(request, 'leave_list.html', {'leaves': leaves, 'user': user})
+def leave_restore(request, leave_id):
+    leave = get_object_or_404(Leave, id=leave_id)
+    leave.is_deleted = False  # Restore
+    leave.save()
+    return redirect('leave_list', user_id=leave.user.id)
