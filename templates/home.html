@@ -69,22 +69,26 @@
 </head>
 <body>
     <h1>Welcome to the HR Management System</h1>
- 
 
     <div class="button-container">
-        <a href="{% url 'department_list' %}" class="button">Manage Departments</a>
-        <a href="{% url 'role_list' %}" class="button">Manage Roles</a>
-        <a href="{% url 'user_list' %}" class="button">Manage Users</a>
-
-        {% if user.is_authenticated %}
+        {% if user.is_superuser %}
+            <a href="{% url 'department_list' %}" class="button">Manage Departments</a>
+            <a href="{% url 'role_list' %}" class="button">Manage Roles</a>
+            <a href="{% url 'user_list' %}" class="button">Manage Users</a>
             <a href="{% url 'performance_list' user_id=user.id %}" class="button">Manage Performance</a>
             <a href="{% url 'task_list' user_id=user.id %}" class="button">Manage Tasks</a>
             <a href="{% url 'leave_list' user_id=user.id %}" class="button">Manage Leave Requests</a>
         {% else %}
-            <p>Please log in to manage performance, tasks, and leave requests.</p>
+            <p>You do not have access to these management features.</p>
+        {% endif %}
+    
+        {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}" class="button">Logout</a>
+        {% else %}
             <a href="{% url 'login' %}" class="button">Login</a> 
         {% endif %}
     </div>
-
+    
+    
 </body>
 </html>

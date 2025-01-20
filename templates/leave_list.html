@@ -12,20 +12,18 @@
     </thead>
     <tbody>
         {% for leave in leaves %}
-            <tr>
-                <td>{{ leave.leave_type }}</td>
-                <td>{{ leave.start_date }}</td>
-                <td>{{ leave.end_date }}</td>
-                <td>{{ leave.status }}</td>
-                <td>
-                    {% if leave.is_deleted %}
-                        <a href="{% url 'leave_restore' leave.id %}" onclick="return confirm('Are you sure you want to restore this leave request?');" class="action-btn restore-btn">Restore</a>
-                    {% else %}
+            {% if not leave.is_deleted %}
+                <tr>
+                    <td>{{ leave.leave_type }}</td>
+                    <td>{{ leave.start_date }}</td>
+                    <td>{{ leave.end_date }}</td>
+                    <td>{{ leave.status }}</td>
+                    <td>
                         <a href="{% url 'leave_create' user.id %}" class="action-btn edit-btn">Edit</a>
                         <a href="{% url 'leave_delete' leave.id %}" onclick="return confirm('Are you sure you want to delete this leave request?');" class="action-btn delete-btn">Delete</a>
-                    {% endif %}
-                </td>
-            </tr>
+                    </td>
+                </tr>
+            {% endif %}
         {% endfor %}
     </tbody>
 </table>

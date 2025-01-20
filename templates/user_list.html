@@ -16,12 +16,10 @@
                 <td>{{ user.department.dept_name }}</td>
                 <td>{{ user.role.role_name }}</td>
                 <td>
-                    {% if user.is_deleted %}
-                        <a href="{% url 'user_restore' user.id %}" onclick="return confirm('Are you sure you want to restore this user?');" class="action-btn restore-btn">Restore</a>
-                    {% else %}
-                        <a href="{% url 'user_update' user.id %}" class="action-btn edit-btn">Edit</a>
-                        <a href="{% url 'user_delete' user.id %}" onclick="return confirm('Are you sure you want to delete this user?');" class="action-btn delete-btn">Delete</a>
-                    {% endif %}
+                    
+                    <a href="{% url 'user_update' user.id %}" class="action-btn edit-btn">Edit</a>
+                     <a href="{% url 'user_delete' user.id %}" onclick="return confirm('Are you sure you want to delete this user?');" class="action-btn delete-btn">Delete</a>
+                    
                 </td>
             </tr>
         {% endfor %}

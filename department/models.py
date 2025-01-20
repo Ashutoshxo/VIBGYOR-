@@ -31,9 +31,7 @@ class Role(models.Model):
 
 from django.contrib.auth.models import AbstractUser
 
-from django.contrib.auth.models import AbstractUser
 
-from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True)
