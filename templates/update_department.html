@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Department</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  
+</head>
+<body>
+
+    <div class="container">
+        <h2>Update Department</h2>
+        
+        {% for message in messages %}
+            <p class="message">{{ message }}</p>
+        {% endfor %}
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Update</button>
+        </form>
+
+        <!-- Back Button -->
+        <a href="{% url 'department_dashboard' %}" class="back-btn">← Back</a>
+        
+    </div>
+
+</body>
+</html>

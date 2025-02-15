@@ -85,11 +85,11 @@ WSGI_APPLICATION = 'HRMatrix.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'HRMatrix',  # Your database name
-        'USER': 'root',  # Your database username
-        'PASSWORD': 'asgrich',  # Your database password
-        'HOST': 'localhost',  # Database host, 'localhost' if running locally
-        'PORT': '3306',  # Default MySQL port
+        'NAME': 'HRMatrix',  
+        'USER': 'root', 
+        'PASSWORD': 'asgrich',  
+        'HOST': 'localhost',  
+        'PORT': '3306',  
     }
 }
 
@@ -128,12 +128,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+
+
+STATIC_URL = "static/"
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = '/'
+
 

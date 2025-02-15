@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deactivate Department</title>
+
+    <!-- Link to external CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <div class="container">
+        {% for message in messages %}
+            <p class="message">{{ message }}</p>
+        {% endfor %}
+
+        <h2>Deactivate Department</h2>
+
+        <div class="warning">
+            ⚠️ Are you sure you want to deactivate <strong>{{ department.dept_name }}</strong>?  
+            <br>This will affect all employees in this department.
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Yes, Deactivate</button>
+        </form>
+        <a href="{% url 'department_dashboard' %}" class="btn btn-secondary">Cancel</a>
+    </div>
+
+</body>
+</html>
