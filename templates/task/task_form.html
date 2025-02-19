@@ -1,0 +1,33 @@
+<form method="post" style="width: 70%; margin: 30px auto; padding: 20px; background-color: #fff; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); border-radius: 8px;">
+    <h2>Create / Edit Task</h2>
+    {% csrf_token %}
+    
+    <div style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <label for="task_title" style="font-weight: bold; width: 30%; text-align: right;">Title</label>
+        <input type="text" id="task_title" name="task_title" style="width: 65%; padding: 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 1em;">
+    </div>
+    
+    <div style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <label for="task_priority" style="font-weight: bold; width: 30%; text-align: right;">Priority</label>
+        <input type="text" id="task_priority" name="task_priority" style="width: 65%; padding: 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 1em;">
+    </div>
+    
+    <div style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <label for="task_type" style="font-weight: bold; width: 30%; text-align: right;">Type</label>
+        <input type="text" id="task_type" name="task_type" style="width: 65%; padding: 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 1em;">
+    </div>
+    
+    <div style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <label for="start_date" style="font-weight: bold; width: 30%; text-align: right;">Start Date</label>
+        <input type="date" id="start_date" name="start_date" style="width: 65%; padding: 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 1em;">
+    </div>
+
+    <div style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <label for="end_date" style="font-weight: bold; width: 30%; text-align: right;">End Date</label>
+        <input type="date" id="end_date" name="end_date" style="width: 65%; padding: 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 1em;">
+    </div>
+
+    <button type="submit" style="width: 100%; padding: 12px; background-color: #007bff; color: #fff; font-size: 1.2em; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease;">
+        Save Task
+    </button>
+</form>

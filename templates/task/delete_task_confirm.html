@@ -1,0 +1,12 @@
+<h2 style="text-align: center; font-size: 2em; color: #333; margin-top: 30px;">Are you sure you want to delete "{{ task.task_title }}"?</h2>
+
+<form method="post" style="width: 60%; margin: 30px auto; padding: 20px; background-color: #fff; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); border-radius: 8px;">
+    {% csrf_token %}
+    <button type="submit" style="width: 100%; padding: 12px; background-color: #e74c3c; color: #fff; font-size: 1.2em; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease;">
+        Confirm Delete
+    </button>
+</form>
+
+<a href="{% url 'task_list' %}" style="display: block; text-align: center; margin-top: 20px; color: #007bff; font-weight: bold; text-decoration: none; font-size: 1.1em; transition: color 0.3s ease;">
+    Cancel
+</a>

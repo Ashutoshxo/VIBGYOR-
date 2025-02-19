@@ -1,0 +1,9 @@
+<h2>Leave Request - {{ leave.get_leave_type_display }}</h2>
+<p>Reason: {{ leave.reason }}</p>
+<p>Status: {{ leave.get_status_display }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>

@@ -39,6 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'department',
+    'role_management',
+    'employee',
+    'task',
+    'performance_management',
 ]
 
 MIDDLEWARE = [
@@ -138,5 +142,14 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp-relay.sendinblue.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = '838160001@smtp-brevo.com'
+EMAIL_HOST_PASSWORD = 'WsQwvUEa58dL46Az'
+DEFAULT_FROM_EMAIL = 'ashutoshxoxo@gmail.com'
 
 

@@ -19,7 +19,13 @@ from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),  
     path('', include('department.urls')),
+    path('role_management/', include('role_management.urls')),
+    path('employee/', include('employee.urls')),
+    path('auth/', include('authentication.urls')),
+    path('task/', include('task.urls')), 
+    path('performance_management/', include('performance_management.urls')), 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
